@@ -33,7 +33,7 @@ function refreshTabs() {
             let thisTab = tabs[i].url;
             let thisID  = tabs[i].id;
             chrome.tabs.update(thisID, {url: thisTab});
-            if (! thisTab.match("chrome://*")) {
+            if (! thisTab.match("edge://*") ) {
                 chrome.tabs.executeScript(thisID, {
                     file: contentjsfile
                 }, function() {});
