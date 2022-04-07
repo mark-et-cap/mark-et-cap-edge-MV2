@@ -278,16 +278,16 @@ function benzingaSymbol(hoverHref) {
     }
 };  
 
-function unusualWhaleSymbol(hoverHref) {
-    if (hoverHref.includes("ticker_flow")) {
-        let whaleSplit = hoverHref.split('/');
-        let symbolOver = whaleSplit[whaleSplit.length -1];
-        chrome.runtime.sendMessage({content: symbolOver, message: "get_symbol"});
-    } else {
-        if (hoverHref.includes("/company/")) {
-        let whaleSplit = hoverHref.split('/');
-        let symbolOver = whaleSplit[whaleSplit.length -2];
-        chrome.runtime.sendMessage({content: symbolOver, message: "get_symbol"});
+function unusualWhaleSymbol(hoverHref) {
+    if (hoverHref.includes("ticker_flow")) {
+        let whaleSplit = hoverHref.split('/');
+        let symbolOver = whaleSplit[whaleSplit.length -1];
+        chrome.runtime.sendMessage({content: symbolOver, message: "get_symbol"});
+    } else {
+        if (hoverHref.includes("/company/")) {
+        let whaleSplit = hoverHref.split('/');
+        let symbolOver = whaleSplit[whaleSplit.length -2];
+        chrome.runtime.sendMessage({content: symbolOver, message: "get_symbol"});
         }
     }
 };
@@ -312,7 +312,7 @@ function cryptonewsSymbol(hoverHref) {
         chrome.runtime.sendMessage({content: symbolOver, message: "find_crypto_ticker"}, function(response) {
             let symbolTicker = response.dbResponse
             chrome.runtime.sendMessage({content: symbolTicker, message: "get_symbol"});
-            targetSymbol.symbol = symbolOver;
+            targetSymbol.symbol = symbolTicker;
             targetSymbol.hover = hoverHref;
             return true;
         })
@@ -326,7 +326,7 @@ function blockfolioSymbol(hoverHref) {
         if(symbolOver.indexOf("_") != -1) {
             let symbolFormat = symbolOver.substring(0, symbolOver.length -2);
             chrome.runtime.sendMessage({content: symbolFormat, message: "get_symbol"});
-            targetSymbol.symbol = symbolOver;
+            targetSymbol.symbol = symbolFormat;
             targetSymbol.hover = hoverHref;
         } else {
             chrome.runtime.sendMessage({content: symbolOver, message: "get_symbol"});
@@ -473,3 +473,6 @@ function startTimeoutClear(hoverOver, event) {
 chrome.storage.onChanged.addListener(function () {
     TVOptionEnabled();
 });
+
+
+
